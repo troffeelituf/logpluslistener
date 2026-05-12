@@ -39,6 +39,7 @@ The application expects a JSON array of command objects:
   "add_mode": "append",
   "max_messages": 100
 }
+```
 
 **Parameters:**
 - `type`: `"list"` (required)
@@ -57,7 +58,7 @@ The application expects a JSON array of command objects:
 
 ### Message Command
 
-json
+```json
 {
   "type": "message",
   "list": "list1",
@@ -68,6 +69,7 @@ json
   "background_color": "#1a1a1a",
   "font_size": 16
 }
+```
 
 **Parameters:**
 - `type`: `"message"` (required)
@@ -82,7 +84,7 @@ json
 
 ## Example API Response
 
-json
+```json
 [
   {
 "type": "list",
@@ -108,6 +110,7 @@ json
 "content": "Rate limit exceeded\nRetrying in 60s"
   }
 ]
+```
 
 ## Controls
 
