@@ -2,6 +2,8 @@
 
 A lightweight, real-time log visualization dashboard that displays structured log data in customizable lists.
 
+*(Doc generated with AI)*
+
 ## Features
 
 - **Real-time Updates**: Auto-refresh from HTTP API endpoints at configurable intervals
@@ -141,6 +143,3 @@ Requires a modern browser with ES6+ support and Fetch API.
 ## License
 
 MIT
-
-
-Created `README.md` with comprehensive documentation for your LogPlus ListEner project.
