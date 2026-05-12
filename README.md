@@ -39,7 +39,7 @@ The application expects a JSON array of command objects:
   "background_color": "#f0f0f0",
   "font_size": 14,
   "add_mode": "append",
-  "max_messages": 100
+  "max_messages": 100,
 }
 ```
 
@@ -57,6 +57,7 @@ The application expects a JSON array of command objects:
 - `add_mode`: `"append"` or `"prepend"` (default: append)
 - `max_messages`: Maximum messages to retain (default: 200)
 - `remove`: Set to `true` to delete the list
+- `hide`: Set to `true` to temporarily hide the list, `false` to make it visible again
 
 ### Message Command
 

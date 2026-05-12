@@ -215,7 +215,7 @@
             </div>
         </div>
         
-        <div class="navbar-menu">
+        <div class="navbar-menu is-active">
             <div class="navbar-end">
                 <div class="navbar-item">
                     <button class="button theme-toggle" @click="toggleTheme()">
@@ -268,7 +268,7 @@
         <div class="container is-fluid">
             <div class="columns is-multiline">
                 <template x-for="list in sortedLists" :key="list.id">
-                    <div :class="`column is-${list.rows || 3}`">
+                    <div :class="`column is-${list.rows || 3}`" x-show="!list.hide">
                         <div class="list-container" :style="`height: ${(list.columns || 1) * 50}px;background-color: ${list.list_background_color || ''};`">
                             <div class="list-header" 
                                  :style="`color: ${list.list_color || ''}; background-color: ${list.list_background_color ? 'rgba(0,0,0,0.05)' : ''};`">
@@ -329,6 +329,7 @@
                 messageOrder: {},
                 intervalId: null,
                 intervalRunning: false,
+                pendingRequest: false,
                 maxMessages: 200,
                 
                 init() {
@@ -376,8 +377,12 @@
                     this.intervalRunning = false;
                 },
                 
+
                 async fetchData() {
                     if (!this.apiUrl) return;
+                    
+                    // Check if a request is already pending
+                    if (this.pendingRequest) return;
                     
                     localStorage.setItem('apiUrl', this.apiUrl);
                     localStorage.setItem('refreshInterval', this.refreshInterval);
@@ -386,14 +391,19 @@
                         this.startAutoRefresh();
                     }
                     
+                    this.pendingRequest = true;
+                    
                     try {
                         const response = await fetch(this.apiUrl);
                         const commands = await response.json();
                         this.processCommands(commands);
                     } catch (error) {
                         console.error('Error fetching data:', error);
+                    } finally {
+                        this.pendingRequest = false;
                     }
                 },
+
                 
                 processCommands(commands) {
                     if (!Array.isArray(commands)) return;
@@ -449,6 +459,7 @@
                     if (cmd.background_color !== undefined) list.background_color = cmd.background_color;
                     if (cmd.add_mode !== undefined) list.add_mode = cmd.add_mode;
                     if (cmd.max_messages !== undefined) list.max_messages = cmd.max_messages;
+                    if (cmd.hide !== undefined) list.hide = cmd.hide;
                 },
                 
                 isScrolledToBottom(container) {
@@ -587,6 +598,8 @@
                         if (list.background_color !== undefined) cmd.background_color = list.background_color;
                         if (list.add_mode !== undefined) cmd.add_mode = list.add_mode;
                         if (list.max_messages !== undefined) cmd.max_messages = list.max_messages;
+                        if (list.hide !== undefined) cmd.hide = list.hide;
+
                         commands.push(cmd);
                     });
                     
