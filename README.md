@@ -39,7 +39,7 @@ The application expects a JSON array of command objects:
   "background_color": "#f0f0f0",
   "font_size": 14,
   "add_mode": "append",
-  "max_messages": 100,
+  "max_messages": 100
 }
 ```
 
